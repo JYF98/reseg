@@ -1,5 +1,5 @@
 # Standard library imports
-import cPickle as pkl
+import pickle as pkl
 import collections
 import os
 import random
@@ -657,7 +657,7 @@ def train(saveto='model.npz',
     filenames_train, filenames_valid, filenames_test = filenames
     cheight, cwidth, cchannels = x_train[0].shape
     nclasses = max([np.max(el) for el in y_train]) + 1
-    print '# of classes:', nclasses
+    print ('# of classes:', nclasses)
 
     # Remove the segmentation samples dir to make sure we don't mix samples
     # from different experiments
@@ -692,7 +692,7 @@ def train(saveto='model.npz',
         elif class_balance == 'rare_freq_cost':
             w_freq = 1 / (nclasses * priors)
 
-        print "Class balance weights", w_freq
+        print ("Class balance weights", w_freq)
 
         assert len(priors) == nclasses, ("Number of computed priors are "
                                          "different from number of classes")
@@ -716,7 +716,7 @@ def train(saveto='model.npz',
 
     # Tag test values
     if debug:
-        print "DEBUG MODE: loading tag.test_value ..."
+        print ("DEBUG MODE: loading tag.test_value ...")
         load_data, properties = get_dataset(dataset)
         train, _, _, _, _ = load_data(
             resize_images=resize_images, resize_size=resize_size,
@@ -994,7 +994,7 @@ def train(saveto='model.npz',
                     if (eidx > min_epochs):
                         patience_counter += 1
                         if patience_counter == patience / validFreq:
-                            print 'Early Stop!'
+                            print ('Early Stop!')
                             estop = True
                 else:
                     valid_wait -= 1
@@ -1009,8 +1009,8 @@ def train(saveto='model.npz',
                 save = False
                 pkl.dump(options,
                          open('%s.pkl' % saveto[0], 'wb'))
-                print 'Saved parameters and options in {} in {:.3f}s'.format(
-                    saveto[0], time.time() - save_time)
+                print ('Saved parameters and options in {} in {:.3f}s'.format(
+                    saveto[0], time.time() - save_time))
 
             epoch_cost += cost
 
@@ -1100,7 +1100,7 @@ def show_seg(dataset_name, n_exp, dataset_set, mode='sequential', id=-1):
         pass
 
     if len(options) == 0:
-        print "Error file not found"
+        print ("Error file not found")
         exit()
 
     n_save = options['n_save']
@@ -1240,7 +1240,7 @@ def show_seg(dataset_name, n_exp, dataset_set, mode='sequential', id=-1):
     filenames_train, filenames_valid, filenames_test = filenames
     cheight, cwidth, cchannels = x_train[0].shape
     nclasses = max([np.max(el) for el in y_train]) + 1
-    print '# of classes:', nclasses
+    print ('# of classes:'), nclasses
 
     # Remove the segmentation samples dir to make sure we don't mix samples
     # from different experiments
@@ -1272,7 +1272,7 @@ def show_seg(dataset_name, n_exp, dataset_set, mode='sequential', id=-1):
         elif class_balance == 'rare_freq_cost':
             w_freq = 1 / (nclasses * priors)
 
-        print "Class balance weights", w_freq
+        print ("Class balance weights", w_freq)
 
         assert len(priors) == nclasses, ("Number of computed priors are "
                                          "different from number of classes")
@@ -1406,14 +1406,14 @@ if __name__ == '__main__':
         n_exp = sys.argv[2]
 
     else:
-        print "Usage: dataset_name n_exp, e.g. python reseg.py camvid 1"
+        print("Usage: dataset_name n_exp, e.g. python reseg.py camvid 1")
         sys.exit()
 
     if len(sys.argv) > 3:
         if sys.argv[3] in ['train', 'valid', 'test']:
             dataset_set = sys.argv[3]
         else:
-            print "Usage: choose one between 'train', 'valid', 'test'"
+            print("Usage: choose one between 'train', 'valid', 'test'")
             sys.exit()
     else:
         dataset_set = 'test'
@@ -1423,14 +1423,14 @@ if __name__ == '__main__':
             mode = sys.argv[4]
             if mode in ['filename', 'id']:
                 if len(sys.argv) < 6:
-                    print "Insert a correct filename or id!"
+                    print("Insert a correct filename or id!")
                     sys.exit()
                 else:
                     id = sys.argv[5]
             else:
                 id = -1
         else:
-            print "Usage: mode can be 'random', 'sequential', 'filename', 'id'"
+            print("Usage: mode can be 'random', 'sequential', 'filename', 'id'")
             sys.exit()
     else:
         mode = 'sequential'
